@@ -37,6 +37,9 @@ public class WolfNav : MonoBehaviour
 
     private void Update()
     {
+        
+        
+        
         if (state == MikataState.Follow)
         {
             _agent.SetDestination(target.transform.position);
@@ -56,6 +59,7 @@ public class WolfNav : MonoBehaviour
         }
       
     }
+    
     
     
     

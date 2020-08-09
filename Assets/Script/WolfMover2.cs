@@ -43,7 +43,7 @@ public class WolfMover2 : MonoBehaviour
 	void Update () {
 		InputMagnitude ();
 		//PlayerMoveAndRotation ();
-		Debug.Log(controller.velocity.magnitude);
+		//Debug.Log(controller.velocity.magnitude);
 
         isGrounded = controller.isGrounded;
         if (isGrounded)
@@ -119,6 +119,8 @@ public class WolfMover2 : MonoBehaviour
 			anim.SetFloat ("Speed", Speed, StopAnimTime, Time.deltaTime);
 		}
 	}
+	
+	
 }
 
 
