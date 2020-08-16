@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using  UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class WolfNav : MonoBehaviour
 {
     public MikataState state = default;
 
-    private NavMeshAgent _agent;
+    public NavMeshAgent agent;
     
 // 追いかけるキャラクター
     [SerializeField]
@@ -23,13 +24,14 @@ public class WolfNav : MonoBehaviour
     private float followDistance = 1f;
 
     private int _ram;
-    
+    private Vector3 _distination;
+    public int dashSpeed;
     public enum MikataState {
         Idle, Follow, Interact
     };
     void Start () {
         _animator = GetComponentInChildren<Animator> ();
-        _agent = GetComponent <NavMeshAgent> ();
+        agent = GetComponent <NavMeshAgent> ();
         MikataState state = MikataState.Idle;
 
 
@@ -42,26 +44,53 @@ public class WolfNav : MonoBehaviour
         
         if (state == MikataState.Follow)
         {
-            _agent.SetDestination(target.transform.position);
+            target = GameObject.Find("followPoint");
+            
+            agent.SetDestination(target.transform.position);
         
             //　到着している時
-            if(_agent.remainingDistance < arrivedDistance) {
+            if(agent.remainingDistance < arrivedDistance) {
                 //agent.Stop()
-                _agent.isStopped = true;
-                _animator.SetFloat("Speed", _agent.desiredVelocity.magnitude);
+                agent.isStopped = true;
+                _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
                 //　到着していない時で追いかけ出す距離になったら
-            } else if(_agent.remainingDistance > followDistance) {
+            } else if(agent.remainingDistance > followDistance) {
                 //agent.Resume();
                 //　Unity5.6バージョン以降の再開
-                _agent.isStopped = false;
-                _animator.SetFloat("Speed", _agent.desiredVelocity.magnitude);
+                agent.isStopped = false;
+                _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
             }
         }
+
+        if (state == MikataState.Interact)
+        {
+            //agent.isStopped = false;
+            agent.speed = dashSpeed;
+            
+            agent.SetDestination(_distination);
+            if(agent.remainingDistance < arrivedDistance) {
+                //agent.Stop()
+                agent.isStopped = true;
+                _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
+                //　到着していない時で追いかけ出す距離になったら
+            } else if(agent.remainingDistance > followDistance) {
+                //agent.Resume();
+                //　Unity5.6バージョン以降の再開
+                agent.isStopped = false;
+                _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
+            }
+        }
+       
+        
+        
       
     }
-    
-    
-    
-    
-    
+
+    public void SetDestination(Vector3 dist)
+    {
+
+        _distination= dist;
+    }
+
+  
 }

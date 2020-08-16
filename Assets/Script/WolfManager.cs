@@ -12,11 +12,23 @@ public class WolfManager : MonoBehaviour
     private int _controlledWolf = 0;
     [SerializeField] private WolfContoroller contoroller;
     [SerializeField] private float selectionRadius = 1;
-    private GameObject _wolf;
+    [FormerlySerializedAs("SubCharaPrefab")]
+    [Header("Spawning")]
+    [SerializeField] private WolfNav subCharaPrefab = default;
+
+    private int _contorolledNum;
+
+    private GameObject _player;
 
     void Start()
     {
-       _wolf = GameObject.Find("SubChara");
+        _player = GameObject.FindWithTag("Player");
+      
+       WolfSpawner[] spawners = FindObjectsOfType(typeof(WolfSpawner)) as WolfSpawner[];
+       foreach (WolfSpawner spawner in spawners)
+       {
+           spawner.SpawnPikmin(subCharaPrefab, ref allmikata);
+       }
     }
 
     // Update is called once per frame
@@ -33,24 +45,29 @@ public class WolfManager : MonoBehaviour
         {
             foreach ( WolfNav wolf in allmikata)
             {
-                if(Vector3.Distance(wolf.transform.position, contoroller.target.position) < selectionRadius)
+                if(Vector3.Distance(wolf.transform.position, contoroller.hitPoint) < selectionRadius)
                 {
                     wolf.state = WolfNav.MikataState.Follow;
 
                 }
             }
         }
-        //Debug.Log(_wolf.gameObject.name);
-       /*if(Vector3.Distance(_wolf.transform.position, contoroller.target.position) < selectionRadius)
-       {
-           _wolf.GetComponent<WolfNav>().state = WolfNav.MikataState.Follow;
-           
-       }*/
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            foreach (WolfNav wolf in allmikata)
+            {
+                if (wolf.state == WolfNav.MikataState.Follow && Vector3.Distance(wolf.transform.position, _player.transform.position) < 8)
+                {
+                    //wolf.agent.enabled = false;
+                    wolf.SetDestination(contoroller.hitPoint);
+                    wolf.state = WolfNav.MikataState.Interact;
+
+                }
+            }
+        }
        
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.gameObject.name);
-    }
+  
 }
