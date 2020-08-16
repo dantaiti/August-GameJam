@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 1490369122071977127}
   - component: {fileID: 1490369122071977126}
   m_Layer: 0
-  m_Name: SubChara (3)
+  m_Name: SubChara
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,9 +466,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  player: {fileID: 0}
-  arrivedDistance: 10
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  arrivedDistance: 1.96
   followDistance: 5
+  dashSpeed: 25
 --- !u!195 &1490369122071977126
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -479,7 +481,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.96
-  m_Speed: 10
+  m_Speed: 25.59
   m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 6000
