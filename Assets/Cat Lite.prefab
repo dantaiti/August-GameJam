@@ -977,9 +977,10 @@ GameObject:
   - component: {fileID: 2481063856832573693}
   - component: {fileID: 2481063856832573695}
   - component: {fileID: 2481063856832573692}
+  - component: {fileID: 4884869233726215859}
   m_Layer: 0
   m_Name: Cat Lite
-  m_TagString: Untagged
+  m_TagString: SubChara
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1032,11 +1033,11 @@ CharacterController:
   serializedVersion: 2
   m_Height: 4.01
   m_Radius: 1.8
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 51.26
+  m_StepOffset: 1.82
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.47, z: 0}
+  m_Center: {x: 0, y: 1.84, z: 0}
 --- !u!114 &2481063856832573695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,9 +1053,10 @@ MonoBehaviour:
   state: 0
   agent: {fileID: 0}
   target: {fileID: 0}
-  arrivedDistance: 7.87
+  arrivedDistance: 3.08
   followDistance: 9.89
   dashSpeed: 25
+  isGrounded: 0
 --- !u!195 &2481063856832573692
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1064,19 +1066,32 @@ NavMeshAgent:
   m_GameObject: {fileID: 2342920229282628}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.96
+  m_Radius: 1.45
   m_Speed: 25.59
-  m_Acceleration: 25
+  m_Acceleration: 35.34
   avoidancePriority: 50
   m_AngularSpeed: 6000
   m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3.45
-  m_BaseOffset: 0.54
+  m_Height: 3.85
+  m_BaseOffset: 0.08
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &4884869233726215859
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342920229282628}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.2128191, z: 1.356006}
+  m_Center: {x: 0, y: 0.45, z: 0.003768477}
 --- !u!1 &2342920229282630
 GameObject:
   m_ObjectHideFlags: 0

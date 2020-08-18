@@ -57,11 +57,13 @@ public class WolfManager : MonoBehaviour
         {
             foreach (WolfNav wolf in allmikata)
             {
-                if (wolf.state == WolfNav.MikataState.Follow && Vector3.Distance(wolf.transform.position, _player.transform.position) < 8)
+                if (wolf.state == WolfNav.MikataState.Follow && Vector3.Distance(wolf.transform.position, _player.transform.position) < 10)
                 {
                     //wolf.agent.enabled = false;
                     wolf.SetDestination(contoroller.hitPoint);
                     wolf.state = WolfNav.MikataState.Interact;
+                    break;
+                    
 
                 }
             }
