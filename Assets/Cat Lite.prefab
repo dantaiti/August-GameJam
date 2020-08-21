@@ -1035,7 +1035,7 @@ CharacterController:
   m_Radius: 1.8
   m_SlopeLimit: 51.26
   m_StepOffset: 1.82
-  m_SkinWidth: 0.08
+  m_SkinWidth: 5.99
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.84, z: 0}
 --- !u!114 &2481063856832573695
@@ -1053,7 +1053,7 @@ MonoBehaviour:
   state: 0
   agent: {fileID: 0}
   target: {fileID: 0}
-  arrivedDistance: 3.08
+  arrivedDistance: 7.5
   followDistance: 9.89
   dashSpeed: 25
   isGrounded: 0
