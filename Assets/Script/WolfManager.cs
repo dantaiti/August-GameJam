@@ -4,21 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
+
+[System.Serializable] public class SubCharaEvent : UnityEvent<int> { }
 public class WolfManager : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]private List<WolfNav> allmikata = new List<WolfNav>();
-    private int _controlledWolf = 0;
     [SerializeField] private WolfContoroller contoroller;
     [SerializeField] private float selectionRadius = 1;
     [FormerlySerializedAs("SubCharaPrefab")]
     [Header("Spawning")]
     [SerializeField] private WolfNav subCharaPrefab = default;
+    
+    [Header("Events")]
+    public SubCharaEvent catFollow;
 
-    private int _contorolledNum;
+    private int _contorolledNum=0;
 
     private GameObject _player;
+    
 
     void Start()
     {
@@ -48,6 +54,11 @@ public class WolfManager : MonoBehaviour
                 if(Vector3.Distance(wolf.transform.position, contoroller.hitPoint) < selectionRadius)
                 {
                     wolf.state = WolfNav.MikataState.Follow;
+                   
+                    _contorolledNum++;
+                    catFollow.Invoke(_contorolledNum);
+                    
+
 
                 }
             }
@@ -62,6 +73,8 @@ public class WolfManager : MonoBehaviour
                     //wolf.agent.enabled = false;
                     wolf.SetDestination(contoroller.hitPoint);
                     wolf.state = WolfNav.MikataState.Interact;
+                    _contorolledNum--;
+                    catFollow.Invoke(_contorolledNum);
                     break;
                     
 

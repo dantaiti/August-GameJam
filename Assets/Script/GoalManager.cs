@@ -8,15 +8,19 @@ public class GoalManager : MonoBehaviour
 {
     // Start is called before the first frame update
    [SerializeField] private List<GameObject> catlist = new List<GameObject>();
+   private Animator _doorAnim;
     void Start()
     {
-        
+        _doorAnim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (catlist.Count >= 5)
+        {
+            _doorAnim.SetBool("Open", true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
