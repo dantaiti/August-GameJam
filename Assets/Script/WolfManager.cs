@@ -11,7 +11,8 @@ using UnityEngine.Events;
 public class WolfManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]private List<WolfNav> allmikata = new List<WolfNav>();
+    [SerializeField] private List<WolfNav> allmikata = new List<WolfNav>();
+    public int allMikataNum;
     [SerializeField] private WolfContoroller contoroller;
     [SerializeField] private float selectionRadius = 1;
     [FormerlySerializedAs("SubCharaPrefab")]
@@ -35,11 +36,15 @@ public class WolfManager : MonoBehaviour
        {
            spawner.SpawnPikmin(subCharaPrefab, ref allmikata);
        }
+
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        allMikataNum = allmikata.Count;
+       
         if (Input.GetKeyDown(KeyCode.Space))
             Time.timeScale = Time.timeScale == 1 ? .2f : 1;
 
@@ -53,12 +58,15 @@ public class WolfManager : MonoBehaviour
             {
                 if(Vector3.Distance(wolf.transform.position, contoroller.hitPoint) < selectionRadius)
                 {
-                    wolf.state = WolfNav.MikataState.Follow;
-                   
-                    _contorolledNum++;
-                    catFollow.Invoke(_contorolledNum);
                     
 
+                    if (wolf.state != WolfNav.MikataState.Follow)
+                    {
+                        wolf.state = WolfNav.MikataState.Follow;
+                        _contorolledNum++;
+                        catFollow.Invoke(_contorolledNum);
+                    }
+                    
 
                 }
             }

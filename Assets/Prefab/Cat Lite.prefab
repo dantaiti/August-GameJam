@@ -1053,7 +1053,7 @@ MonoBehaviour:
   state: 0
   agent: {fileID: 0}
   target: {fileID: 0}
-  arrivedDistance: 7.5
+  arrivedDistance: 5.08
   followDistance: 9.89
   dashSpeed: 25
   isGrounded: 0
