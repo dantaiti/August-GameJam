@@ -10,21 +10,18 @@ using Random = System.Random;
 public class WolfNav : MonoBehaviour
 {
     public MikataState state = default;
-
     public NavMeshAgent agent;
     private GameObject _player;
-    
 // 追いかけるキャラクター
-    [SerializeField]
-    private GameObject target;
-    private Animator _animator;
-//　到着したとする距離
-    [SerializeField]
-    private float arrivedDistance = 1.5f;
-//　追いかけ始める距離
-    [SerializeField]
-    private float followDistance = 1f;
+     private GameObject _target;
 
+    private Animator _animator;
+
+//　到着したとする距離
+    [SerializeField] private float arrivedDistance = 1.5f;
+
+//　追いかけ始める距離
+    [SerializeField] private float followDistance = 1f;
     private int _ram;
     private Vector3 _distination;
     public int dashSpeed;
@@ -32,23 +29,35 @@ public class WolfNav : MonoBehaviour
     private CharacterController controller;
     private float verticalVel;
     private Vector3 moveVector;
-    public enum MikataState {
-        Idle, Follow, Interact
+    public SubCharaEvent onStartFollow;
+   
+   
+
+
+
+    public enum MikataState
+    {
+        Idle,
+        Follow,
+        Start,
     };
-    void Start () {
+
+    void Start()
+    {
         controller = GetComponent<CharacterController>();
-        _animator = GetComponentInChildren<Animator> ();
-        agent = GetComponent <NavMeshAgent> ();
+        _animator = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
         MikataState state = MikataState.Idle;
         _player = GameObject.FindWithTag("Player");
-        
-
+        _target = GameObject.Find("followPoint");
+        state = MikataState.Start; 
+       
 
     }
 
     private void Update()
     {
-        
+       
         isGrounded = controller.isGrounded;
         if (isGrounded)
         {
@@ -58,60 +67,55 @@ public class WolfNav : MonoBehaviour
         {
             verticalVel -= 1;
         }
+
+        if (state == MikataState.Follow)
+        {
+            _distination = _target.transform.position;
+        }
+        Debug.Log(_distination);
         moveVector = new Vector3(0, verticalVel * .2f * Time.deltaTime, 0);
         //controller.Move(moveVector);
 
-        
-        if (state == MikataState.Follow)
+        if (state == MikataState.Follow || state == MikataState.Idle)
         {
-            target = GameObject.Find("followPoint");
-            
-            agent.SetDestination(target.transform.position);
-        
+
+
+            agent.SetDestination(_distination);
+
             //　到着している時
-            if(agent.remainingDistance < arrivedDistance) {
+            if (agent.remainingDistance < arrivedDistance)
+            {
                 //agent.Stop()
                 agent.isStopped = true;
                 _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
                 //transform.LookAt(_player.transform.position);
                 //　到着していない時で追いかけ出す距離になったら
-            } else if(agent.remainingDistance > followDistance) {
+            }
+            else if (agent.remainingDistance > followDistance)
+            {
                 //agent.Resume();
                 //　Unity5.6バージョン以降の再開
                 agent.isStopped = false;
-                
-                _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
-            }
-        }
 
-        if (state == MikataState.Interact)
-        {
-            //agent.isStopped = false;
-            agent.speed = dashSpeed;
-            
-            agent.SetDestination(_distination);
-            if(agent.remainingDistance < arrivedDistance) {
-                //agent.Stop()
-                agent.isStopped = true;
-                _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
-                //　到着していない時で追いかけ出す距離になったら
-            } else if(agent.remainingDistance > followDistance) {
-                //agent.Resume();
-                //　Unity5.6バージョン以降の再開
-                agent.isStopped = false;
                 _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
             }
         }
-       
-        
-        
-      
     }
-
-    public void SetDestination(Vector3 dist)
+    
+    public void SetFollowPoint(Vector3 point)
     {
-        _distination= dist;
+        //_distination = point;
+        onStartFollow.Invoke(0);
+        state = MikataState.Follow;
     }
-
+    
+    public void SetMovePoint(Vector3 movepoint)
+    {
+        _distination = movepoint;
+        state = MikataState.Idle;
+    }
+    
+   
+    
   
 }

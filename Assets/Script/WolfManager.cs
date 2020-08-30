@@ -13,6 +13,7 @@ public class WolfManager : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private List<WolfNav> allmikata = new List<WolfNav>();
     public int allMikataNum;
+   [SerializeField] private Transform follow;
     [SerializeField] private WolfContoroller contoroller;
     [SerializeField] private float selectionRadius = 1;
     [FormerlySerializedAs("SubCharaPrefab")]
@@ -62,12 +63,12 @@ public class WolfManager : MonoBehaviour
 
                     if (wolf.state != WolfNav.MikataState.Follow)
                     {
-                        wolf.state = WolfNav.MikataState.Follow;
+                        
                         _contorolledNum++;
                         catFollow.Invoke(_contorolledNum);
+                        wolf.SetFollowPoint(follow.position);
                     }
                     
-
                 }
             }
         }
@@ -79,8 +80,8 @@ public class WolfManager : MonoBehaviour
                 if (wolf.state == WolfNav.MikataState.Follow && Vector3.Distance(wolf.transform.position, _player.transform.position) < 10)
                 {
                     //wolf.agent.enabled = false;
-                    wolf.SetDestination(contoroller.hitPoint);
-                    wolf.state = WolfNav.MikataState.Interact;
+                    wolf.SetMovePoint(contoroller.hitPoint);
+                    
                     _contorolledNum--;
                     catFollow.Invoke(_contorolledNum);
                     break;
