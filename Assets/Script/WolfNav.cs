@@ -30,8 +30,9 @@ public class WolfNav : MonoBehaviour
     private float verticalVel;
     private Vector3 moveVector;
     public SubCharaEvent onStartFollow;
-   
-   
+    
+
+
 
 
 
@@ -107,6 +108,8 @@ public class WolfNav : MonoBehaviour
         //_distination = point;
         onStartFollow.Invoke(0);
         state = MikataState.Follow;
+        this.GetComponent<CatAudioContoroller>().FollowSoundPlay();
+        
     }
     
     public void SetMovePoint(Vector3 movepoint)

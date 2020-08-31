@@ -14,10 +14,7 @@ public class WolfContoroller : MonoBehaviour
     private LineRenderer _line = default;
     
     const int LinePoints = 5;
-
-  
-   
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +26,6 @@ public class WolfContoroller : MonoBehaviour
     void Update()
     {
         UpdateMousePosition();
-       
     }
 
     void UpdateMousePosition()
@@ -48,7 +44,6 @@ public class WolfContoroller : MonoBehaviour
             }
         }
     }
-
     
 }
 
