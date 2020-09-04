@@ -14,12 +14,9 @@ public class WolfNav : MonoBehaviour
     private GameObject _player;
 // 追いかけるキャラクター
      private GameObject _target;
-
-    private Animator _animator;
-
+     private Animator _animator;
 //　到着したとする距離
     [SerializeField] private float arrivedDistance = 1.5f;
-
 //　追いかけ始める距離
     [SerializeField] private float followDistance = 1f;
     private int _ram;
@@ -30,19 +27,13 @@ public class WolfNav : MonoBehaviour
     private float verticalVel;
     private Vector3 moveVector;
     public SubCharaEvent onStartFollow;
-    
-
-
-
-
-
     public enum MikataState
     {
         Idle,
         Follow,
         Start,
     };
-
+    
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -51,14 +42,11 @@ public class WolfNav : MonoBehaviour
         MikataState state = MikataState.Idle;
         _player = GameObject.FindWithTag("Player");
         _target = GameObject.Find("followPoint");
-        state = MikataState.Start; 
-       
-
+        state = MikataState.Start;
+        
     }
-
     private void Update()
     {
-       
         isGrounded = controller.isGrounded;
         if (isGrounded)
         {
@@ -68,7 +56,6 @@ public class WolfNav : MonoBehaviour
         {
             verticalVel -= 1;
         }
-
         if (state == MikataState.Follow)
         {
             _distination = _target.transform.position;
@@ -79,10 +66,7 @@ public class WolfNav : MonoBehaviour
 
         if (state == MikataState.Follow || state == MikataState.Idle)
         {
-
-
             agent.SetDestination(_distination);
-
             //　到着している時
             if (agent.remainingDistance < arrivedDistance)
             {
@@ -97,28 +81,28 @@ public class WolfNav : MonoBehaviour
                 //agent.Resume();
                 //　Unity5.6バージョン以降の再開
                 agent.isStopped = false;
-
                 _animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
             }
         }
+
+        
+        
     }
-    
     public void SetFollowPoint(Vector3 point)
     {
         //_distination = point;
+        agent.isStopped = false;
         onStartFollow.Invoke(0);
         state = MikataState.Follow;
-        this.GetComponent<CatAudioContoroller>().FollowSoundPlay();
-        
+        this.GetComponent<CatAudioContoroller>().FollowSoundPlay(0);
     }
-    
     public void SetMovePoint(Vector3 movepoint)
     {
         _distination = movepoint;
         state = MikataState.Idle;
+        this.GetComponent<CatAudioContoroller>().FollowSoundPlay(1);
     }
     
-   
     
-  
+    
 }
