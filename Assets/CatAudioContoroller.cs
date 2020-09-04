@@ -14,15 +14,15 @@ public class CatAudioContoroller : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-       // _cat = GetComponent<WolfNav>();
+        //_cat = GetComponent<WolfNav>();
         _audioSource = GetComponent<AudioSource>();
         //_cat.onStartFollow.AddListener((x) => FollowSoundPlay(x));
     }
     // Update is called once per frame
-   public void FollowSoundPlay()
+   public void FollowSoundPlay(int n)
     {
-        int i = Random.Range(0, 4);
-        Debug.Log(i);
-        _audioSource.PlayOneShot(noticeSound[i]);
+        //int i = Random.Range(0, 2);
+        
+        _audioSource.PlayOneShot(noticeSound[n]);
     }
 }

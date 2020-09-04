@@ -15,7 +15,8 @@ public class GoalManager : MonoBehaviour
   [SerializeField] private TextMeshProUGUI needNumText;
   [SerializeField] private TextMeshProUGUI currentNumText;  
   [SerializeField] private TextMeshProUGUI needNumText2;
-  [SerializeField] private TextMeshProUGUI currentNumText2;  
+  [SerializeField] private TextMeshProUGUI currentNumText2;
+  
 
   void Start()
   {
@@ -29,10 +30,13 @@ public class GoalManager : MonoBehaviour
     {
         needNumText.gameObject.SetActive(false);
         currentNumText.gameObject.SetActive(false);
+        
         if (catlist.Count > 0)
         {
             needNumText.gameObject.SetActive(true);
             currentNumText.gameObject.SetActive(true);
+            
+
         }
         
         if (catlist.Count >= needNum)
